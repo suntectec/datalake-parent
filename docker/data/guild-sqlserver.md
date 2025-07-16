@@ -3,7 +3,7 @@
 set alias in bashrc
 
 ```shell
-echo "alias dmssql='cd /opt/paimon-poc/data/mssql && docker compose -f docker-compose.yml '" >> ~/.bashrc
+echo "alias dmssql='cd /opt/poc-allin1/docker/data/mssql && docker compose -f docker-compose.yml '" >> ~/.bashrc
 
 source ~/.bashrc
 ```

@@ -5,7 +5,7 @@
 set alias in bashrc
 
 ```shell
-echo "alias dseatunnel='cd /opt/paimon-poc/compute/seatunnel && docker compose -f docker-compose.yml '" >> ~/.bashrc
+echo "alias dseatunnel='cd /opt/poc-allin1/docker/compute/seatunnel && docker compose -f docker-compose.yml '" >> ~/.bashrc
 
 source ~/.bashrc
 ```

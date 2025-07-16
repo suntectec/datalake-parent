@@ -5,7 +5,7 @@
 set alias in bashrc
 
 ```shell
-echo "alias dflink='cd /opt/paimon-poc/compute/flink && docker compose -f docker-compose.yml '" >> ~/.bashrc
+echo "alias dflink='cd /opt/poc-allin1/docker/compute/flink && docker compose -f docker-compose.yml '" >> ~/.bashrc
 
 source ~/.bashrc
 ```
