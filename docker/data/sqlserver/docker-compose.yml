@@ -1,0 +1,15 @@
+services:
+  sqlserver:
+    image: sqlserver:2022
+    container_name: paimon-poc.sqlserver
+    ports:
+      - 14330:1433
+    user: root
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_AGENT_ENABLED: 1
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_PID: Developer
+      MSSQL_MEMORY_LIMIT_MB: 2048
+      MSSQL_LCID: 1033
+      TZ: Asia/Macau

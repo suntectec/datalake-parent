@@ -1,0 +1,73 @@
+services:
+  master:
+    image: seatunnel:2.3.11-jdk-11
+    container_name: seatunnel-master
+    environment:
+      - ST_DOCKER_MEMBER_LIST=172.16.0.2,172.16.0.3,172.16.0.4
+    entrypoint: >
+      /bin/sh -c "
+      /opt/seatunnel/bin/seatunnel-cluster.sh -r master
+      "
+    ports:
+      - "5801:5801"
+      - "8080:8080"
+    networks:
+      seatunnel_network:
+        ipv4_address: 172.16.0.2
+    volumes:
+      - ./config/seatunnel.yaml:/opt/seatunnel/config/seatunnel.yaml
+
+  worker1:
+    image: seatunnel:2.3.11-jdk-11
+    container_name: seatunnel-worker-1
+    environment:
+      - ST_DOCKER_MEMBER_LIST=172.16.0.2,172.16.0.3,172.16.0.4
+    entrypoint: >
+      /bin/sh -c "
+      /opt/seatunnel/bin/seatunnel-cluster.sh -r worker
+      "
+    depends_on:
+      - master
+    networks:
+      seatunnel_network:
+        ipv4_address: 172.16.0.3
+
+  worker2:
+    image: seatunnel:2.3.11-jdk-11
+    container_name: seatunnel-worker-2
+    environment:
+      - ST_DOCKER_MEMBER_LIST=172.16.0.2,172.16.0.3,172.16.0.4
+    entrypoint: >
+      /bin/sh -c "
+      /opt/seatunnel/bin/seatunnel-cluster.sh -r worker
+      "
+    depends_on:
+      - master
+    networks:
+      seatunnel_network:
+        ipv4_address: 172.16.0.4
+
+  client:
+    image: seatunnel:2.3.11-jdk-11
+    container_name: seatunnel-client
+    environment:
+      - ST_DOCKER_MEMBER_LIST=master:5801
+    # keep the container running
+    entrypoint: >
+      /bin/sh -c "
+      tail -f /dev/null
+      "
+    depends_on:
+      - master
+    networks:
+      seatunnel_network:
+        ipv4_address: 172.16.0.10
+    volumes:
+      - ./job:/opt/seatunnel/job
+
+networks:
+  seatunnel_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
