@@ -1,0 +1,13 @@
+--connectors-v2--
+connector-cdc-mysql
+connector-cdc-sqlserver
+connector-cdc-oracle
+connector-file-hadoop
+connector-file-local
+connector-file-s3
+connector-file-sftp
+connector-hive
+connector-iceberg
+connector-jdbc
+connector-kafka
+connector-paimon
