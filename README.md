@@ -12,10 +12,18 @@ Running DataLake Docker Containers using Dockerfile and Docker Compose is a conv
 
 Assuming docker is installed you can start the containers using the following
 
-Operation Linux host location: `/opt/paimon-poc`
+Operation Linux host location: `/opt/poc-allin1`
 
 1. [x] **_flink_**
 
 1. [x] **_native_**
 
 1. [x] **_seatunnel_**
+
+### For entering workdir-path faster, using setting alias in bashrc:
+
+```shell
+echo "alias pp='cd /opt/poc-allin1'" >> ~/.bashrc
+
+source ~/.bashrc
+```
