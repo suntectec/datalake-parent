@@ -1,5 +1,5 @@
 ```
-docker exec -it seatunnel-client bin/seatunnel.sh -c job/fake2console.sql.batch.conf
+docker exec -it seatunnel-client bin/seatunnel.sh -c job/fake2console.sql2.batch.conf
 ```
 
 ```
