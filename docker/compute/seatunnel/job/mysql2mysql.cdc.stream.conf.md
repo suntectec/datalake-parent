@@ -1,0 +1,11 @@
+```
+docker exec -it seatunnel-client bin/seatunnel.sh -c job/mysql2mysql.cdc.stream.conf
+```
+
+```
+docker logs -f seatunnel-worker-1 -n 0
+```
+
+```
+docker logs -f seatunnel-worker-2 -n 0
+```
