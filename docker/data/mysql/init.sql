@@ -1,5 +1,5 @@
 CREATE DATABASE db_1;
- USE db_1;
+USE db_1;
 CREATE TABLE user_1 (
                         id INTEGER NOT NULL PRIMARY KEY,
                         name VARCHAR(255) NOT NULL DEFAULT 'flink',
@@ -39,10 +39,9 @@ CREATE TABLE user_2 (
 );
 INSERT INTO user_2 VALUES (220,"user_220","Shanghai","123567891234","user_220@foo.com");
 
+
 CREATE DATABASE IF NOT EXISTS mydatabase;
-
 USE mydatabase;
-
 CREATE TABLE IF NOT EXISTS products (
                                         id INT AUTO_INCREMENT PRIMARY KEY,
                                         name VARCHAR(255) NOT NULL,
