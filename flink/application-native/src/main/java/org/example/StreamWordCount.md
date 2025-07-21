@@ -15,3 +15,10 @@ docker logs -f flink-taskmanager-1 -n 0
 ```
 docker logs -f flink-taskmanager-2 -n 0
 ```
+
+# For Provided Run
+
+add dependencies with 'provided' scope to classpath
+
+![img_3.png](img_3.png)
+![img_2.png](img_2.png)
