@@ -2,16 +2,16 @@
 
 export version="1.20.1"
 pwd_path=$(pwd)
-https://dlcdn.apache.org/flink/flink-1.20.1/flink-1.20.1-bin-scala_2.12.tgz
-export SEATUNNEL_HOME="$pwd_path/apache-seatunnel-${version}"
+
+export FLINK_HOME="$pwd_path/flink"
 
 install() {
     echo "Installing Flink version $version..."
-    wget "https://archive.apache.org/dist/flink/flink-${version}/flink-${version}-bin-scala_2.12.tgz"
+    wget -O flink.tgz "https://dlcdn.apache.org/flink/flink-${version}/flink-${version}-bin-scala_2.12.tgz"
 
     # it will extract to the $SEATUNNEL_HOME directory
-    tar -xzvf "flink-${version}-bin-scala_2.12.tgz"
-    # rm "apache-seatunnel-${version}-bin.tar.gz"
+    tar -xf "flink.tgz"
+    rm "flink.tgz"
     echo "Flink version $version installed successfully."
 }
 

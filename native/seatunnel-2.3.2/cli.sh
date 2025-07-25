@@ -7,7 +7,7 @@ export SEATUNNEL_HOME="$pwd_path/apache-seatunnel-${version}"
 
 install() {
     echo "Installing Seatunnel version $version..."
-    wget "https://archive.apache.org/dist/seatunnel/${version}/apache-seatunnel-${version}-bin.tar.gz"
+    wget "https://dlcdn.apache.org/seatunnel/${version}/apache-seatunnel-${version}-bin.tar.gz"
 
     # it will extract to the $SEATUNNEL_HOME directory
     tar -xzvf "apache-seatunnel-${version}-bin.tar.gz"

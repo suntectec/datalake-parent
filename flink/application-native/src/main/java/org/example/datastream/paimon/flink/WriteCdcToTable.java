@@ -1,20 +1,16 @@
-package org.example.sql;
+package org.example.datastream.paimon.flink;
 
-import com.amazonaws.services.s3.S3AccessPointResource;
-import com.amazonaws.services.s3.request.S3HandlerContextKeys;
-import org.apache.flink.configuration.Configuration;
-import org.apache.flink.configuration.RestartStrategyOptions;
-import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.paimon.catalog.CatalogLoader;
-import org.apache.paimon.catalog.Identifier;
 import org.apache.paimon.flink.FlinkCatalogFactory;
+import org.apache.paimon.catalog.Identifier;
 import org.apache.paimon.flink.sink.cdc.RichCdcRecord;
 import org.apache.paimon.flink.sink.cdc.RichCdcSinkBuilder;
 import org.apache.paimon.options.Options;
-import org.apache.paimon.schema.Schema;
 import org.apache.paimon.table.Table;
 import org.apache.paimon.types.DataTypes;
+
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 import static org.apache.paimon.types.RowKind.INSERT;
 
@@ -40,16 +36,9 @@ public class WriteCdcToTable {
 
         Identifier identifier = Identifier.create("my_db", "T");
         Options catalogOptions = new Options();
-        catalogOptions.set("type", "paimon");
-        catalogOptions.set("warehouse", "s3://warehouse/paimon/");
-        catalogOptions.set("s3.endpoint", "http://192.168.138.15:19000");
-        catalogOptions.set("s3.access-key", "minioadmin");
-        catalogOptions.set("s3.secret-key", "minioadmin");
-        catalogOptions.set("s3.path.style.access", "true");
-        catalogOptions.set("auto-create", "true");
+        catalogOptions.set("warehouse", "file:/path/to/warehouse");
         CatalogLoader catalogLoader =
                 () -> FlinkCatalogFactory.createPaimonCatalog(catalogOptions);
-        catalogLoader.load().createTable(identifier, Schema.newBuilder().build(), true);
         Table table = catalogLoader.load().getTable(identifier);
 
         new RichCdcSinkBuilder(table)
@@ -59,9 +48,5 @@ public class WriteCdcToTable {
                 .build();
 
         env.execute();
-    }
-
-    public static void main(String[] args) throws Exception {
-        writeTo();
     }
 }

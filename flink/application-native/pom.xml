@@ -12,32 +12,45 @@
     <artifactId>application-native</artifactId>
 
     <properties>
+        <exec.mainClass>org.example.StreamWordCount</exec.mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <flink.version>1.20.1</flink.version>
         <target.java.version>11</target.java.version>
         <maven.compiler.source>${target.java.version}</maven.compiler.source>
         <maven.compiler.target>${target.java.version}</maven.compiler.target>
         <log4j.version>2.14.1</log4j.version>
+        <fastjson2.version>2.0.57</fastjson2.version>
+        <lombok.version>1.18.36</lombok.version>
     </properties>
 
     <dependencies>
         <!-- Apache Flink 依赖项 -->
         <!-- 之所以提供这些依赖项，是因为它们不应该打包到JAR文件中。 -->
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-core -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-core</artifactId>
             <version>${flink.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-clients -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-clients</artifactId>
             <version>${flink.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-streaming-java</artifactId>
+            <version>${flink.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-java -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-java</artifactId>
             <version>${flink.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -102,26 +115,67 @@
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-api-java-bridge</artifactId>
-            <version>1.20.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.flink</groupId>
             <artifactId>flink-shaded-hadoop-3-uber</artifactId>
             <version>3.1.1.7.2.9.0-173-9.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.paimon/paimon-bundle -->
+        <dependency>
+            <groupId>org.apache.paimon</groupId>
+            <artifactId>paimon-bundle</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.paimon/paimon-filesystems -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.paimon</groupId>-->
+<!--            <artifactId>paimon-filesystems</artifactId>-->
+<!--            <version>1.2.0</version>-->
+<!--            <type>pom</type>-->
+<!--        </dependency>-->
+        <!--    Hybrid Source    -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-base</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-files</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <!-- 高性能的JSON库 -->
+        <!-- https://github.com/alibaba/fastjson2/wiki/fastjson2_intro_cn#0-fastjson-20%E4%BB%8B%E7%BB%8D -->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.version}</version>
+        </dependency>
+        <!-- JavaFaker: 用于生成虚假数据的Java库 -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <!-- Lombok: 简化Java代码编写的依赖项 -->
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- S3 连接器依赖 -->
         <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-s3-fs-hadoop -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-s3-fs-hadoop</artifactId>
-            <version>1.20.1</version>
+            <version>${flink.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.paimon/paimon-s3-impl -->
+        <!-- Paimon S3 连接器 -->
+        <!-- https://mvnrepository.com/artifact/org.apache.paimon/paimon-s3 -->
         <dependency>
             <groupId>org.apache.paimon</groupId>
-            <artifactId>paimon-s3-impl</artifactId>
+            <artifactId>paimon-s3</artifactId>
             <version>1.2.0</version>
         </dependency>
     </dependencies>
@@ -175,7 +229,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.example.StreamWordCount</mainClass>
+                                    <mainClass>${exec.mainClass}</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
