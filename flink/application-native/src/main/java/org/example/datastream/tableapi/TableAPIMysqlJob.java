@@ -1,4 +1,4 @@
-package org.example.tableapi;
+package org.example.datastream.tableapi;
 
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;

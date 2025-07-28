@@ -1,4 +1,4 @@
-package org.example.sql;
+package org.example.datastream.sql;
 
 /**
  * @author Jagger

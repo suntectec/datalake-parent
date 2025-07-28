@@ -1,4 +1,4 @@
-package org.example.jdbc;
+package org.example.datastream.jdbc;
 
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
 import org.apache.flink.api.common.typeinfo.TypeInformation;

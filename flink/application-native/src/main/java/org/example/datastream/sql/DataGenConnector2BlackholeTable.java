@@ -1,4 +1,4 @@
-package org.example.sql;
+package org.example.datastream.sql;
 
 import org.apache.flink.connector.datagen.table.DataGenConnectorOptions;
 import org.apache.flink.table.api.*;
