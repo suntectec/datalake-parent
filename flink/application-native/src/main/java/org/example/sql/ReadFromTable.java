@@ -1,4 +1,4 @@
-package org.example.sqlcreate;
+package org.example.sql;
 
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;

@@ -1,4 +1,4 @@
-package org.example.sqlcreate;
+package org.example.sql;
 
 /**
  * @author Jagger
