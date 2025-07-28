@@ -1,9 +1,9 @@
-package org.example.sql;
+package org.example.sqlcreate;
 
 import org.apache.flink.connector.datagen.table.DataGenConnectorOptions;
 import org.apache.flink.table.api.*;
 
-public class SQLApplicationDemo {
+public class DataGenConnector2BlackholeTable {
     public static void main(String[] args) {
         // StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         // StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);

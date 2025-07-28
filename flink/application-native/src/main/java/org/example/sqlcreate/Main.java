@@ -1,4 +1,4 @@
-package org.example.sql;
+package org.example.sqlcreate;
 
 /**
  * @author Jagger
@@ -6,7 +6,7 @@ package org.example.sql;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        ReadFromTable.readFrom();
         // WriteToTable.writeTo();
+        // ReadFromTable.readFrom();
     }
 }
