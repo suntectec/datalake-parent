@@ -14,7 +14,7 @@ import static org.apache.flink.table.api.Expressions.$;
  * @author Jagger
  * @since 2025/7/28 17:12
  */
-public class TableAPIMysqlJob {
+public class TableAPIMySQLJob {
     public static void main(String[] args) {
         StreamExecutionEnvironment env=StreamExecutionEnvironment.getExecutionEnvironment();
         env.setRuntimeMode(RuntimeExecutionMode.STREAMING);

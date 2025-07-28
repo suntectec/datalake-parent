@@ -12,7 +12,7 @@ import org.apache.flink.types.Row;
  * @author Jagger
  * @since 2025/7/28 16:39
  */
-public class JdbcMysqlJob {
+public class JdbcMySQLJob {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env=StreamExecutionEnvironment.createLocalEnvironment();
         env.setParallelism(1);

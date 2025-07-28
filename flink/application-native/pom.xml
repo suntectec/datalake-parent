@@ -190,6 +190,12 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.3.0</version>
         </dependency>
+        <!-- SqlServer CDC Connector -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-sqlserver-cdc</artifactId>
+            <version>3.4.0</version>
+        </dependency>
     </dependencies>
 
     <build>
