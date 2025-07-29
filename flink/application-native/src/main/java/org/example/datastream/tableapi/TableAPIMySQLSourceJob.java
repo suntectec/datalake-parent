@@ -14,13 +14,13 @@ import static org.apache.flink.table.api.Expressions.$;
  * @author Jagger
  * @since 2025/7/28 17:12
  */
-public class TableAPIMySQLJob {
+public class TableAPIMySQLSourceJob {
     public static void main(String[] args) {
-        StreamExecutionEnvironment env=StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setRuntimeMode(RuntimeExecutionMode.STREAMING);
         env.setParallelism(1);
 
-        StreamTableEnvironment tableEnv= StreamTableEnvironment.create(env);
+        StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
 
         Schema tableSchema = Schema.newBuilder()
                 .column("order_number", DataTypes.INT().notNull())

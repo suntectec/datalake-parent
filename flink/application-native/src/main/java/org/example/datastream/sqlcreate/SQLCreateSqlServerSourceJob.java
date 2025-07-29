@@ -8,7 +8,7 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
  * @author Jagger
  * @since 2025/7/28 17:32
  */
-public class SQLCreateSqlServerJob {
+public class SQLCreateSqlServerSourceJob {
     public static void main(String[] args) {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setRuntimeMode(RuntimeExecutionMode.STREAMING);
