@@ -10,11 +10,11 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
  */
 public class SQLCreateMySQLSourceJob {
     public static void main(String[] args) {
-        StreamExecutionEnvironment env=StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setRuntimeMode(RuntimeExecutionMode.STREAMING);
         env.setParallelism(1);
 
-        StreamTableEnvironment tableEnv=StreamTableEnvironment.create(env);
+        StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
 
         String sqlStatement = "create table orders( order_number int,order_date date,purchaser int,quantity int,product_id int)with(" +
                 "'connector'='jdbc'," +
