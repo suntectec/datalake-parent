@@ -17,7 +17,7 @@ Official website: [https://flink.apache.org/](https://flink.apache.org/)
 ./cli.sh start
 ```
 
-### Run SeaTunnel Engine Job
+### Run Job
 
 E.g.: ./cli.sh run apache-seatunnel-2.3.11/config/v2.batch.config.template
 
@@ -30,3 +30,27 @@ E.g.: ./cli.sh run apache-seatunnel-2.3.11/config/v2.batch.config.template
 ```bash
 ./cli.sh stop
 ```
+
+# Flink SQL Gateway
+
+```
+./bin/start-cluster.sh
+```
+
+Starting the SQL Gateway
+
+```
+./bin/sql-gateway.sh start -Dsql-gateway.endpoint.rest.address=localhost
+```
+
+```
+curl http://192.168.138.15:8083/v1/info
+```
+
+Running SQL Queries
+
+```
+curl --request POST http://192.168.138.15:8083/v1/sessions
+```
+
+......
