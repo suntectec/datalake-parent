@@ -9,26 +9,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
  * @author Jagger
  * @since 2025/7/28 17:42
  */
-public class JdbcSqlServerJob {
-    // static class Order {
-    //     public Order(Long id, String order_id, Integer supplier_id, Integer item_id, String status) {
-    //         this.id = id;
-    //         this.order_id = order_id;
-    //         this.supplier_id = supplier_id;
-    //         this.item_id = item_id;
-    //         this.status = status;
-    //     }
-    //
-    //     final Long id;
-    //     final String order_id;
-    //
-    //     final Integer supplier_id;
-    //
-    //     final Integer item_id;
-    //
-    //     final String status;
-    // };
-
+public class JdbcMySQLSinkJob {
     static class Book {
         public Book(Long id, String title, String authors, Integer year) {
             this.id = id;
