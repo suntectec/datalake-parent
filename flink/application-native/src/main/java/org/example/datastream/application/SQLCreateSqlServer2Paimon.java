@@ -5,4 +5,7 @@ package org.example.datastream.application;
  * @since 2025/7/30 18:00
  */
 public class SQLCreateSqlServer2Paimon {
+    public static void main(String[] args) {
+
+    }
 }
