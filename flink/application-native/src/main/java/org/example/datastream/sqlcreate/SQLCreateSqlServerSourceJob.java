@@ -16,7 +16,7 @@ public class SQLCreateSqlServerSourceJob {
 
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
 
-        String sqlStatement = "CREATE TABLE sqlserver_source (\n" +
+        String sqlStatement = "CREATE TABLE SourceOrders (\n" +
                 "                                  id BIGINT,\n" +
                 "                                  order_id VARCHAR(36),\n" +
                 "                                  supplier_id INT,\n" +
@@ -40,7 +40,7 @@ public class SQLCreateSqlServerSourceJob {
                 "      'table-name' = 'INV.orders'\n" +
                 "      );";
         tableEnv.executeSql(sqlStatement);
-        tableEnv.executeSql("SELECT * FROM sqlserver_source")
+        tableEnv.executeSql("SELECT * FROM SourceOrders")
                 .print();
     }
 }

@@ -192,17 +192,18 @@
             <version>8.3.0</version>
         </dependency>
         <!-- SqlServer CDC Connector -->
+        <!-- include mssql-jdbc:9.4.1.jre8 dependency, which url doesn't needs appending Encrypt=false; -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-sqlserver-cdc</artifactId>
             <version>3.4.0</version>
         </dependency>
         <!-- SqlServer 2022 JDBC -->
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>12.10.1.jre11</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.microsoft.sqlserver</groupId>-->
+<!--            <artifactId>mssql-jdbc</artifactId>-->
+<!--            <version>12.10.1.jre11</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
