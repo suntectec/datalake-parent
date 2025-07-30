@@ -1,4 +1,4 @@
-package org.example.datastream.sql;
+package org.example.datastream.sqlcreate;
 
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -9,12 +9,13 @@ import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.types.Row;
 import org.apache.flink.types.RowKind;
+
 /**
  * @author Jagger
- * @since 2025/7/25 16:02
+ * @since 2025/7/30 16:39
  */
-public class WriteToTable {
-    public static void writeTo() throws Exception {
+public class SQLCreatePaimonSinkJob {
+    public static void main(String[] args) {
         // create environments of both APIs
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
@@ -65,5 +66,4 @@ public class WriteToTable {
         //        tableEnv.executeSql("SELECT * FROM sink_paimon_table").print();
 
     }
-
 }

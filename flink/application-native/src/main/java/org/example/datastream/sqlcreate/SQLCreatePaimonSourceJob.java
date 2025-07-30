@@ -1,4 +1,4 @@
-package org.example.datastream.sql;
+package org.example.datastream.sqlcreate;
 
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -8,22 +8,21 @@ import org.apache.flink.types.Row;
 
 /**
  * @author Jagger
- * @since 2025/7/25 15:54
+ * @since 2025/7/30 16:39
  */
-public class ReadFromTable {
-
-    public static void readFrom() throws Exception {
+public class SQLCreatePaimonSourceJob {
+    public static void main(String[] args) throws Exception {
         // create environments of both APIs
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
+        StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
 
         // create paimon catalog
-        tableEnv.executeSql("CREATE CATALOG paimon WITH ('type' = 'paimon', 'warehouse'='file:/tmp/paimon')");
-        tableEnv.executeSql("USE CATALOG paimon");
+        tEnv.executeSql("CREATE CATALOG paimon WITH ('type' = 'paimon', 'warehouse'='file:/tmp/paimon')");
+        tEnv.executeSql("USE CATALOG paimon");
 
         // convert to DataStream
-        Table table = tableEnv.sqlQuery("SELECT * FROM sink_paimon_table");
-        DataStream<Row> dataStream = tableEnv.toChangelogStream(table);
+        Table table = tEnv.sqlQuery("SELECT * FROM sink_paimon_table");
+        DataStream<Row> dataStream = tEnv.toChangelogStream(table);
 
         // use this datastream
         dataStream.executeAndCollect().forEachRemaining(System.out::println);
