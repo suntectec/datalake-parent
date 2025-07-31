@@ -45,3 +45,19 @@ CREATE TABLE paimon_sink (
 SET 'execution.checkpointing.interval' = '10 s';
 
 INSERT INTO paimon_sink SELECT * FROM sqlserver_source;
+
+CREATE TABLE Orders
+(
+    id       BIGINT,
+    username BIGINT,
+    product  VARCHAR(64),
+    amount   INT
+) WITH (
+      'connector' = 'sqlserver-cdc',
+      'hostname' = '192.168.138.15',
+      'port' = '14330',
+      'username' = 'SA',
+      'password' = 'Abcd1234',
+      'database-name' = 'TestDB',
+      'table-name' = 'dbo.orders'
+      );
