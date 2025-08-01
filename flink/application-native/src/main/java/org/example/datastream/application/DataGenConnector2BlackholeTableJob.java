@@ -6,7 +6,7 @@ import org.apache.flink.table.functions.ScalarFunction;
 
 import java.util.Random;
 
-public class DataGenConnector2BlackholeTable {
+public class DataGenConnector2BlackholeTableJob {
     public static void main(String[] args) {
         // 1. 创建表环境
         // StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();

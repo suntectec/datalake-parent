@@ -17,11 +17,12 @@ import org.slf4j.LoggerFactory;
  * @author Jagger
  * @since 2025/7/31 11:36
  */
-public class TableAPIPaimonS32Console {
+public class TableAPIPaimonS32ConsoleJob {
 
-    private static final Logger logger = LoggerFactory.getLogger(TableAPIPaimonS32Console.class);
+    // Define Logger at the class level
+    private static final Logger logger = LoggerFactory.getLogger(TableAPIPaimonS32ConsoleJob.class);
 
-    public static void run() throws Exception {
+    public static void main(String[] args) throws Exception {
         // create environments of both APIs
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 

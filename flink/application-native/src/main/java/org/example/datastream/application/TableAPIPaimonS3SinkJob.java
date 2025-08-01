@@ -18,12 +18,12 @@ import static org.apache.paimon.types.RowKind.INSERT;
  * @author Jagger
  * @since 2025/7/30 18:00
  */
-public class TableAPISqlServer2PaimonS3 {
+public class TableAPIPaimonS3SinkJob {
 
-    // 类级别定义Logger
-    private static final Logger logger = LoggerFactory.getLogger(TableAPISqlServer2PaimonS3.class);
+    // Define Logger at the class level
+    private static final Logger logger = LoggerFactory.getLogger(TableAPIPaimonS3SinkJob.class);
 
-    public static void run(String sqlServerHost, String sqlServerPort, String sqlServerUsername, String sqlServerPassword) throws Exception {
+    public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         // for CONTINUOUS_UNBOUNDED source, set checkpoint interval
         env.enableCheckpointing(5000L);

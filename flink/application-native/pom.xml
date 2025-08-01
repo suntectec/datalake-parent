@@ -108,11 +108,13 @@
             <scope>provided</scope>
         </dependency>
         <!-- paimon -->
+        <!-- https://mvnrepository.com/artifact/org.apache.paimon/paimon-flink-1.20 -->
         <dependency>
             <groupId>org.apache.paimon</groupId>
             <artifactId>paimon-flink-1.20</artifactId>
             <version>1.2.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-shaded-hadoop-3-uber -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-shaded-hadoop-3-uber</artifactId>
@@ -124,18 +126,13 @@
             <artifactId>paimon-bundle</artifactId>
             <version>1.2.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.paimon/paimon-filesystems -->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.paimon</groupId>-->
-<!--            <artifactId>paimon-filesystems</artifactId>-->
-<!--            <version>1.2.0</version>-->
-<!--            <type>pom</type>-->
-<!--        </dependency>-->
         <!--    Hybrid Source    -->
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-base -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-base</artifactId>
-            <version>${flink.version}</version>
+            <version>1.20.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -193,6 +190,7 @@
         </dependency>
         <!-- SqlServer CDC Connector -->
         <!-- include mssql-jdbc:9.4.1.jre8 dependency, which url doesn't needs appending Encrypt=false; -->
+        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-sqlserver-cdc -->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-sqlserver-cdc</artifactId>
