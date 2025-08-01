@@ -2,6 +2,7 @@ package org.example.datastream.application;
 
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.table.api.TableResult;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,14 +60,10 @@ public class SQLCreateSqlServer2PaimonS3Job {
                         ");"
         );
 
-        tEnv.sqlQuery("SELECT * FROM `paimon_catalog`.`my_db`.`T`")
-                .execute()
-                .print();
-
-        // TableResult tableResult = tEnv.executeSql(
-        //         "INSERT INTO `paimon_catalog`.`inventory`.`orders` SELECT * FROM Orders"
-        // );
-        // if (tableResult.getJobClient().isPresent())
-        //     System.out.println(tableResult.getJobClient().get().getJobStatus());
+        TableResult tableResult = tEnv.executeSql(
+                "INSERT INTO paimon_catalog.inventory.orders SELECT * FROM Orders"
+        );
+        if (tableResult.getJobClient().isPresent())
+            System.out.println(tableResult.getJobClient().get().getJobStatus());
     }
 }
