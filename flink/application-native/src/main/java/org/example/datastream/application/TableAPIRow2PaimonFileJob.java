@@ -22,10 +22,10 @@ import org.slf4j.LoggerFactory;
  * @author Jagger
  * @since 2025/8/1 11:30
  */
-public class TableAPIPaimonFileSinkJob {
+public class TableAPIRow2PaimonFileJob {
 
     // Define Logger at the class level
-    private static final Logger logger = LoggerFactory.getLogger(TableAPIPaimonFileSinkJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(TableAPIRow2PaimonFileJob.class);
 
     public static void main(String[] args) throws Exception {
         // create environments of both APIs
