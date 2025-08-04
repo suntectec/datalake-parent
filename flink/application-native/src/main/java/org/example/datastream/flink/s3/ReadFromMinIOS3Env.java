@@ -1,15 +1,15 @@
-package org.example.datastream.flink.paimon;
+package org.example.datastream.flink.s3;
 
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 在 config/config.yaml 中配置 MinIO 的 S3 相关参数
+ * 在 config/config.yaml 中配置 MinIO 的 S3 相关参数，打包任务，提交运行
  */
 public class ReadFromMinIOS3Env {
     private static final Logger LOG = LoggerFactory.getLogger(ReadFromMinIOS3Env.class);
-    public static void readFrom() throws Exception {
+    public static void main(String[] args) throws Exception {
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 

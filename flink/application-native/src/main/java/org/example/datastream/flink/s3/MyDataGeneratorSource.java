@@ -1,35 +1,18 @@
-package org.example.datastream.flink.paimon;
+package org.example.datastream.flink.s3;
 
 import com.alibaba.fastjson2.JSONObject;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
-import org.apache.flink.api.common.serialization.SimpleStringEncoder;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.connector.source.util.ratelimit.RateLimiterStrategy;
-import org.apache.flink.configuration.Configuration;
 import org.apache.flink.connector.datagen.source.DataGeneratorSource;
-import org.apache.flink.connector.file.sink.FileSink;
-import org.apache.flink.core.fs.FileSystem;
-import org.apache.flink.core.fs.Path;
-import org.apache.flink.core.plugin.PluginManager;
-import org.apache.flink.core.plugin.PluginUtils;
 import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.sink.filesystem.rollingpolicies.OnCheckpointRollingPolicy;
 import org.example.entity.UserInfoEntity;
 import org.example.function.MyGeneratorFunction;
 
-public class DataGeneratorWriteToMinIO {
-    public static void run() throws Exception {
-        // 初始化 s3 插件
-        Configuration pluginConfiguration = new Configuration();
-        pluginConfiguration.setString("s3.endpoint", "http://192.168.138.15:9000");
-        pluginConfiguration.setString("s3.access-key", "minioadmin");
-        pluginConfiguration.setString("s3.secret-key", "minioadmin");
-        pluginConfiguration.setString("s3.path.style.access", "true");
-        PluginManager pluginManager = PluginUtils.createPluginManagerFromRootFolder(pluginConfiguration);
-        FileSystem.initialize(pluginConfiguration, pluginManager);
-
+public class MyDataGeneratorSource {
+    public static void main(String[] args) throws Exception {
         // 获取执行环境
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         // 启用检查点，设置检查点间隔为 2 分钟，检查点模式为 精准一次
@@ -50,17 +33,8 @@ public class DataGeneratorWriteToMinIO {
                 .fromSource(source, WatermarkStrategy.noWatermarks(), "Generator Source")
                 .map(user -> JSONObject.toJSONString(user));
 
-        // Sink
-        FileSink<String> sink = FileSink
-                .forRowFormat(new Path("s3://warehouse/test/flink/sink"), new SimpleStringEncoder<String>("UTF-8"))
-                // 基于 Checkpoint 的滚动策略
-                .withRollingPolicy(OnCheckpointRollingPolicy.build())
-                .build();
-
         // 将数据打印到控制台
         stream.print("sink minio");
-        // 写入数据
-        stream.sinkTo(sink);
 
         // 执行程序
         env.execute("生成模拟数据并写入MinIO");

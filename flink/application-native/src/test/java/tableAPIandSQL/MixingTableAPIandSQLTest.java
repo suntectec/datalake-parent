@@ -1,9 +1,9 @@
-package org.example.tableApiandSQL.tableApi;
+package tableAPIandSQL;
 
 import org.apache.flink.connector.datagen.table.DataGenConnectorOptions;
 import org.apache.flink.table.api.*;
 
-public class TableAPIDemo {
+public class MixingTableAPIandSQLTest {
     public static void main(String[] args) {
         // StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         // StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
@@ -32,7 +32,19 @@ public class TableAPIDemo {
         // Create a Table object from a Table API query
         Table table1 = tableEnv.from("SourceTable");
 
+        // Create a Table object from a SQL query
+        Table table2 = tableEnv.sqlQuery("SELECT * FROM SourceTable");
+
         // Emit a Table API result Table to a TableSink, same for SQL result
-        TableResult tableResult = table1.insertInto("SinkTable").execute();
+        // TableResult tableResult = table1.insertInto("SinkTable").execute();
+
+        // Prepare the insert into pipeline
+        TablePipeline pipeline = table1.insertInto("SinkTable");
+
+        // Print explain details
+        pipeline.printExplain();
+
+        // emit the result Table to the registered TableSink
+        pipeline.execute();
     }
 }

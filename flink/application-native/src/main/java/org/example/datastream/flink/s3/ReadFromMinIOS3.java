@@ -1,4 +1,4 @@
-package org.example.datastream.flink.paimon;
+package org.example.datastream.flink.s3;
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.configuration.Configuration;
@@ -15,7 +15,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import java.time.Duration;
 
 public class ReadFromMinIOS3 {
-    public static void readFrom() throws Exception {
+    public static void main(String[] args) throws Exception {
         // 初始化 s3 插件
         Configuration pluginConfiguration = new Configuration();
         pluginConfiguration.setString("s3.endpoint", "http://192.168.138.15:9000");

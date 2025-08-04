@@ -10,17 +10,8 @@ import org.apache.paimon.table.Table;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.types.Row;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-/**
- * @author Jagger
- * @since 2025/7/31 11:36
- */
-public class TableAPIPaimonS32ConsoleJob {
-
-    // Define Logger at the class level
-    private static final Logger logger = LoggerFactory.getLogger(TableAPIPaimonS32ConsoleJob.class);
+public class ReadPaimonS3Table2ConsoleJob {
 
     public static void main(String[] args) throws Exception {
         // create environments of both APIs
@@ -28,13 +19,14 @@ public class TableAPIPaimonS32ConsoleJob {
 
         // get table from catalog
         Options catalogOptions = new Options();
+        catalogOptions.set("type", "paimon");
         catalogOptions.set("warehouse", "s3://warehouse/paimon/");
         catalogOptions.set("s3.endpoint", "http://192.168.138.15:9000");
         catalogOptions.set("s3.access-key", "minioadmin");
         catalogOptions.set("s3.secret-key", "minioadmin");
         catalogOptions.set("s3.path.style.access", "true");
         Catalog catalog = FlinkCatalogFactory.createPaimonCatalog(catalogOptions);
-        Table table = catalog.getTable(Identifier.create("my_db", "T"));
+        Table table = catalog.getTable(Identifier.create("inventory", "orders"));
 
         // table = table.copy(Collections.singletonMap("scan.file-creation-time-millis", "..."));
 

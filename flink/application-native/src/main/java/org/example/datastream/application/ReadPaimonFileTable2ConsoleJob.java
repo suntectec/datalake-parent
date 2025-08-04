@@ -1,4 +1,4 @@
-package org.example.datastream.paimon.flink;
+package org.example.datastream.application;
 
 import org.apache.paimon.catalog.Catalog;
 import org.apache.paimon.catalog.Identifier;
@@ -11,23 +11,20 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.types.Row;
 
-public class ReadFromTable {
-
-    public static void readFrom() throws Exception {
+/**
+ * @author Jagger
+ * @since 2025/8/4 10:56
+ */
+public class ReadPaimonFileTable2ConsoleJob {
+    public static void main(String[] args) throws Exception {
         // create environments of both APIs
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         // get table from catalog
         Options catalogOptions = new Options();
-        catalogOptions.set("type", "paimon");
-        catalogOptions.set("warehouse", "s3://paimon/");
-        catalogOptions.set("s3.endpoint", "http://192.168.138.15:9000");
-        catalogOptions.set("s3.access-key", "minioadmin");
-        catalogOptions.set("s3.secret-key", "minioadmin");
-        catalogOptions.set("s3.path.style.access", "true");
-        catalogOptions.set("auto-create", "true");
+        catalogOptions.set("warehouse", "/path/to/warehouse");
         Catalog catalog = FlinkCatalogFactory.createPaimonCatalog(catalogOptions);
-        Table table = catalog.getTable(Identifier.create("paimon_db", "orders"));
+        Table table = catalog.getTable(Identifier.create("my_db", "T"));
 
         // table = table.copy(Collections.singletonMap("scan.file-creation-time-millis", "..."));
 

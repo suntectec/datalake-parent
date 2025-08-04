@@ -11,46 +11,28 @@ import org.apache.paimon.catalog.Catalog;
 import org.apache.paimon.catalog.Identifier;
 import org.apache.paimon.flink.FlinkCatalogFactory;
 import org.apache.paimon.flink.sink.FlinkSinkBuilder;
-import org.apache.paimon.flink.sink.cdc.RichCdcRecord;
 import org.apache.paimon.options.Options;
 import org.apache.paimon.schema.Schema;
 import org.apache.paimon.table.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.apache.paimon.types.RowKind.INSERT;
-
 /**
  * @author Jagger
  * @since 2025/8/1 11:30
  */
-public class TableAPIPaimonS3SinkJob {
+public class WriteTableRow2PaimonFileTableJob {
 
     // Define Logger at the class level
-    private static final Logger logger = LoggerFactory.getLogger(TableAPIPaimonS3SinkJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(WriteTableRow2PaimonFileTableJob.class);
 
     public static void main(String[] args) throws Exception {
         // create environments of both APIs
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         // for CONTINUOUS_UNBOUNDED source, set checkpoint interval
-        // env.enableCheckpointing(5000L);
+        // env.enableCheckpointing(60_000);
 
         // create a changelog DataStream
-        DataStream<RichCdcRecord> dataStream =
-                env.fromElements(
-                        RichCdcRecord.builder(INSERT)
-                                .field("order_id", org.apache.paimon.types.DataTypes.BIGINT(), "123")
-                                .field("price", org.apache.paimon.types.DataTypes.DOUBLE(), "62.2")
-                                .build(),
-                        // dt field will be added with schema evolution
-                        RichCdcRecord.builder(INSERT)
-                                .field("order_id", org.apache.paimon.types.DataTypes.BIGINT(), "245")
-                                .field("price", org.apache.paimon.types.DataTypes.DOUBLE(), "82.1")
-                                .field("dt", org.apache.paimon.types.DataTypes.TIMESTAMP(), "2023-06-12 20:21:12")
-                                .build());
-
-        dataStream.print();
-
         DataStream<Row> input =
                 env.fromElements(
                                 Row.ofKind(RowKind.INSERT, "Alice", 12),
@@ -61,29 +43,22 @@ public class TableAPIPaimonS3SinkJob {
 
         // get table from catalog
         Options catalogOptions = new Options();
-        catalogOptions.set("warehouse", "s3://warehouse/paimon/");
-        catalogOptions.set("s3.endpoint", "http://192.168.138.15:9000");
-        catalogOptions.set("s3.access-key", "minioadmin");
-        catalogOptions.set("s3.secret-key", "minioadmin");
-        catalogOptions.set("auto-create", "true");
+        catalogOptions.set("warehouse", "/path/to/warehouse");
         Catalog catalog = FlinkCatalogFactory.createPaimonCatalog(catalogOptions);
         catalog.createDatabase("my_db", true);
         catalog.createTable(
                 Identifier.create("my_db", "T"), Schema.newBuilder()
-                        .column("order_id", org.apache.paimon.types.DataTypes.BIGINT())
-                        .column("price", org.apache.paimon.types.DataTypes.DOUBLE())
-                        .column("dt", org.apache.paimon.types.DataTypes.TIMESTAMP())
+                        .column("name", org.apache.paimon.types.DataTypes.STRING())
+                        .column("age", org.apache.paimon.types.DataTypes.INT())
                         .build(), true);
 
         Table table = catalog.getTable(Identifier.create("my_db", "T"));
 
         DataType inputType =
                 DataTypes.ROW(
-                        DataTypes.FIELD("order_id", DataTypes.BIGINT()),
-                        DataTypes.FIELD("price", DataTypes.DOUBLE()),
-                        DataTypes.FIELD("dt", DataTypes.TIMESTAMP()));
+                        DataTypes.FIELD("name", DataTypes.STRING()),
+                        DataTypes.FIELD("age", DataTypes.INT()));
         FlinkSinkBuilder builder = new FlinkSinkBuilder(table).forRow(input, inputType);
-
 
         // set sink parallelism
         // builder.parallelism(_your_parallelism)

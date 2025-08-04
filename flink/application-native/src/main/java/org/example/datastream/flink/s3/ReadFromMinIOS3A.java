@@ -1,4 +1,4 @@
-package org.example.datastream.flink.paimon;
+package org.example.datastream.flink.s3;
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.configuration.Configuration;
@@ -12,7 +12,7 @@ import org.apache.flink.runtime.state.hashmap.HashMapStateBackend;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 public class ReadFromMinIOS3A {
-    public static void readFrom() throws Exception {
+    public static void main(String[] args) throws Exception {
         Configuration pluginConfiguration = new Configuration();
         pluginConfiguration.setString("s3a.access-key", "minioadmin");
         pluginConfiguration.setString("s3a.secret-key", "minioadmin");
