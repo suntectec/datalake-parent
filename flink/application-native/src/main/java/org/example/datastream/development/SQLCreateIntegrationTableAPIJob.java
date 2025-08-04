@@ -3,7 +3,7 @@ package org.example.datastream.development;
 import org.apache.flink.connector.datagen.table.DataGenConnectorOptions;
 import org.apache.flink.table.api.*;
 
-public class MixTableAPIandSQLJob {
+public class SQLCreateIntegrationTableAPIJob {
     public static void main(String[] args) {
         // StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         // StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
@@ -46,5 +46,14 @@ public class MixTableAPIandSQLJob {
 
         // emit the result Table to the registered TableSink
         pipeline.execute();
+
+        // Emit a Table API result Table to a TableSink, same for SQL result
+        // TableResult tableResult = table1.insertInto("SinkTable").execute();
+
+        // tableEnv.executeSql("SELECT * FROM SourceTable").print();
+        // tableEnv.executeSql("SELECT * FROM SinkTable").print();
+        // tableResult.print();
+        // Table sourceTable = tableEnv.from("SourceTable").select($("f0"));
+        // tableEnv.createTemporaryView("sourceTable", sourceTable);
     }
 }
