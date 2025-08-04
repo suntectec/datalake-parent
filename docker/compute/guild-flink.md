@@ -15,7 +15,7 @@ source ~/.bashrc
 ### Approach.1. Submit Job to Flink Cluster
 
 ```shell
-docker exec -it flink-jobmanager bin/sql-client.sh embedded -f /opt/flink/jobs/sqlserver2paimon.s3.sql
+docker exec -it flink-jobmanager bin/sql-client.sh embedded -f /opt/flink/job/sqlserver2paimon.s3.sql
 ```
 
 ### Approach.2. Submit Job to Flink SQL Client
@@ -23,7 +23,7 @@ docker exec -it flink-jobmanager bin/sql-client.sh embedded -f /opt/flink/jobs/s
 With running flink-client container, to Access the SQL CLI
 
 ```shell
-docker exec -it flink-client bin/sql-client.sh embedded -f /opt/flink/jobs/sqlserver2paimon.s3.sql
+docker exec -it flink-client bin/sql-client.sh embedded -f /opt/flink/job/sqlserver2paimon.s3.sql
 ```
 
 ### Approach.3. Submit Job within Container

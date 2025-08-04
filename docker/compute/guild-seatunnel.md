@@ -120,6 +120,9 @@ seatunnel:
 
 ```shell
 POST /submit-job
+
+# or
+curl --location 'http://192.168.138.15:8080/submit-job/upload' --form 'config_file=@"/opt/poc-allin1/docker/compute/seatunnel/job/fake2console.rowkindextractor.conf"'
 ```
 
 # Flink SQL Client - Query Paimon
