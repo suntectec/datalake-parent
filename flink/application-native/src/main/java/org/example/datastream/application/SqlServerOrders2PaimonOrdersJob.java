@@ -5,6 +5,7 @@ import org.apache.flink.cdc.connectors.base.options.StartupOptions;
 import org.apache.flink.cdc.connectors.sqlserver.source.SqlServerSourceBuilder;
 import org.apache.flink.cdc.connectors.sqlserver.source.SqlServerSourceBuilder.SqlServerIncrementalSource;
 import org.apache.flink.cdc.debezium.JsonDebeziumDeserializationSchema;
+import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.example.util.MyParameter;
 import org.slf4j.Logger;
@@ -42,13 +43,19 @@ public class SqlServerOrders2PaimonOrdersJob {
         env.enableCheckpointing(3000);
 
         // set the source parallelism to 2
-        env.fromSource(
-                        sqlServerSource,
-                        WatermarkStrategy.noWatermarks(),
-                        "SqlServerIncrementalSource")
+        DataStreamSource<String> dataStreamSource = env.fromSource(
+                sqlServerSource,
+                WatermarkStrategy.noWatermarks(),
+                "SqlServerIncrementalSource");
+        dataStreamSource
                 .setParallelism(2)
                 .print()
                 .setParallelism(1);
+
+        // String convert to RichCdcRecord
+        dataStreamSource
+                .setParallelism(2)
+                        .print();
 
         // DataStream<RichCdcRecord> dataStream =
         //         env.fromElements(
@@ -85,7 +92,7 @@ public class SqlServerOrders2PaimonOrdersJob {
         // Table table = catalogLoader.load().getTable(identifier);
         //
         // new RichCdcSinkBuilder(table)
-        //         .forRichCdcRecord(sqlServerIncrementalSource)
+        //         .forRichCdcRecord(dataStreamSource)
         //         .identifier(identifier)
         //         .catalogLoader(catalogLoader)
         //         .build();

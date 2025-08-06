@@ -150,7 +150,30 @@ Synchronizing Databases:
     --table_conf bucket=4 \
     --table_conf changelog-producer=input \
     --table_conf sink.parallelism=4
+    
+# Kafka-Paimon Table Sync: inventory.INV.orders - Paimon S3
+./bin/flink run \
+    ./lib/plugin/paimon-flink-action-1.2.0.jar \
+    kafka_sync_table \
+    --warehouse s3://lakehouse/paimon \
+    --database inventory \
+    --table INV.orders \
+    --primary_keys id \
+    --kafka_conf properties.bootstrap.servers=192.168.138.15:9092 \
+    --kafka_conf topic=SqlServer.Orders \
+    --kafka_conf properties.group.id=paimon-s3-group \
+    --kafka_conf value.format=debezium-json \
+    --kafka_conf scan.startup.mode=earliest-offset \
+    --catalog_conf s3.endpoint=http://192.168.138.15:9000 \
+    --catalog_conf s3.path.style.access=true \
+    --catalog_conf s3.access-key=minioadmin \
+    --catalog_conf s3.secret-key=minioadmin \
+    --table_conf bucket=4 \
+    --table_conf changelog-producer=input \
+    --table_conf sink.parallelism=4
+```
 
+```shell
 # Kafka-Paimon Database Sync: inventory - Paimon File
 ./bin/flink run \
     ./lib/plugin/paimon-flink-action-1.2.0.jar \
