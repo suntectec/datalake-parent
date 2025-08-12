@@ -25,7 +25,8 @@ public class KafkaTopic2ConsoleJob {
                 .build();
 
         env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source")
-                .print();
+                .print()
+                .setParallelism(1);
 
         env.execute();
     }
