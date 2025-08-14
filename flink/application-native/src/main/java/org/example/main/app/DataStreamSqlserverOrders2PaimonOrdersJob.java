@@ -19,7 +19,7 @@ import org.apache.paimon.options.Options;
 import org.apache.paimon.table.Table;
 import org.apache.paimon.types.DataTypes;
 import org.apache.paimon.types.RowKind;
-import org.example.util.CustomerParameter;
+import org.example.utils.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,14 +115,14 @@ public class DataStreamSqlserverOrders2PaimonOrdersJob {
     }
 
     public static void main(String[] args) throws Exception {
-        String sqlserver_host = CustomerParameter.getParameter("dev", "sqlserver.host");
-        String sqlserver_port = CustomerParameter.getParameter("dev", "sqlserver.port");
-        String sqlserver_username = CustomerParameter.getParameter("dev", "sqlserver.username");
-        String sqlserver_password = CustomerParameter.getParameter("dev", "sqlserver.password");
+        String sqlserver_host = PropertiesUtil.getProperty("sqlserver.host");
+        String sqlserver_port = PropertiesUtil.getProperty("sqlserver.port");
+        String sqlserver_username = PropertiesUtil.getProperty("sqlserver.username");
+        String sqlserver_password = PropertiesUtil.getProperty("sqlserver.password");
 
-        String s3_endpoint = CustomerParameter.getParameter("dev", "s3.endpoint");
-        String s3_access_key = CustomerParameter.getParameter("dev", "s3.access-key");
-        String s3_secret_key = CustomerParameter.getParameter("dev", "s3.secret-key");
+        String s3_endpoint = PropertiesUtil.getProperty("s3.endpoint");
+        String s3_access_key = PropertiesUtil.getProperty("s3.access-key");
+        String s3_secret_key = PropertiesUtil.getProperty("s3.secret-key");
 
         DataStreamSqlserverOrders2PaimonOrdersJob.run(sqlserver_host, sqlserver_port, sqlserver_username, sqlserver_password,
                 s3_endpoint, s3_access_key, s3_secret_key);
