@@ -11,8 +11,6 @@ import org.example.utils.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-;
-
 /**
  * @author Jagger
  * @since 2025/8/6 11:40
