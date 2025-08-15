@@ -7,24 +7,22 @@ import org.apache.flink.cdc.connectors.sqlserver.source.SqlServerSourceBuilder.S
 import org.apache.flink.cdc.debezium.JsonDebeziumDeserializationSchema;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.example.realtime.demo.sql.CdcSqlserver2SqlserverJob;
 import org.example.utils.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Jagger
- * @since 2025/8/6 11:40
+ * @since 2025/8/15 16:13
  */
 public class CdcSqlserver2ConsoleJob {
-    private static final Logger logger = LoggerFactory.getLogger(CdcSqlserver2ConsoleJob.class);
+    private final static Logger logger = LoggerFactory.getLogger(CdcSqlserver2SqlserverJob.class);
 
-    public static void run(String sqlserver_host, String sqlserver_port, String sqlserver_username, String sqlserver_password,
-                           String warehouse, String s3_endpoint, String s3_access_key, String s3_secret_key,
-                           String kafka_brokers) throws Exception {
-
+    public static void run(String sqlserver_host, String sqlserver_port, String sqlserver_username, String sqlserver_password) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-        // CDC Ingestion source from SQL Server
+        // CDC SqlServer Source
         SqlServerIncrementalSource<String> sqlServerIncrementalSource = new SqlServerSourceBuilder<String>()
                 .hostname(sqlserver_host)
                 .port(Integer.parseInt(sqlserver_port))
@@ -36,9 +34,11 @@ public class CdcSqlserver2ConsoleJob {
                 .startupOptions(StartupOptions.initial())
                 .build();
 
-        DataStreamSource<String> dataStreamSource = env.fromSource(sqlServerIncrementalSource, WatermarkStrategy.noWatermarks(), "SqlServer Source");
+        DataStreamSource<String> dataStreamSource = env
+                .fromSource(sqlServerIncrementalSource, WatermarkStrategy.noWatermarks(), "SqlServer Source")
+                .setParallelism(1);
 
-        dataStreamSource.print();
+        dataStreamSource.print().setParallelism(1);
 
         env.execute();
     }
@@ -49,14 +49,6 @@ public class CdcSqlserver2ConsoleJob {
         String sqlserver_username = PropertiesUtil.getProperty("sqlserver.username");
         String sqlserver_password = PropertiesUtil.getProperty("sqlserver.password");
 
-        String warehouse = PropertiesUtil.getProperty("warehouse");
-        String s3_endpoint = PropertiesUtil.getProperty("s3.endpoint");
-        String s3_access_key = PropertiesUtil.getProperty("s3.access-key");
-        String s3_secret_key = PropertiesUtil.getProperty("s3.secret-key");
-
-        String kafka_brokers = PropertiesUtil.getProperty("kafka.brokers");
-
-        CdcSqlserver2ConsoleJob.run(sqlserver_host, sqlserver_port, sqlserver_username, sqlserver_password,
-                warehouse, s3_endpoint, s3_access_key, s3_secret_key, kafka_brokers);
+        CdcSqlserver2ConsoleJob.run(sqlserver_host, sqlserver_port, sqlserver_username, sqlserver_password);
     }
 }
