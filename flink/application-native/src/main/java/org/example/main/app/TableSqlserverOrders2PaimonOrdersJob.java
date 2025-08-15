@@ -11,6 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Flink 1.20.2 Table API Not Support Paimon Sink:
+ * https://nightlies.apache.org/flink/flink-docs-release-1.20/docs/connectors/table/overview/
+ *
+ * We can use SQL API Paimon Sink or DataStream API Paimon Sink as a substitute.
+ *
  * @author Jagger
  * @since 2025/8/13 10:10
  */
@@ -22,6 +27,7 @@ public class TableSqlserverOrders2PaimonOrdersJob {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
 
+        // SqlServer Source
         tEnv.createTemporaryTable("SourceTable", TableDescriptor.forConnector("jdbc")
                 .schema(Schema.newBuilder()
                         .column("id", DataTypes.BIGINT().notNull())
@@ -45,24 +51,10 @@ public class TableSqlserverOrders2PaimonOrdersJob {
                 .option(JdbcConnectorOptions.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver")
                 .build());
 
-        // MySQL JDBC Sink Table needed to be created in advance
-        tEnv.executeSql("CREATE TABLE SinkTable WITH (" +
-                "    'connector' = 'jdbc',\n" +
-                "    'url' = 'jdbc:mysql://192.168.138.15:3306/inventory',\n" +
-                "    'table-name' = 'sink_orders',\n" +
-                "    'username' = 'root',\n" +
-                "    'password' = '123456',\n" +
-                "    'driver' = 'com.mysql.cj.jdbc.Driver'\n" +
-                ") LIKE SourceTable (EXCLUDING OPTIONS)");
+        // Paimon Sink by Table API or Datatream
 
-        tEnv.sqlQuery("SELECT * FROM SourceTable")
-                .executeInsert("SinkTable");
+        // Insert
 
-        tEnv.sqlQuery("SELECT * FROM SinkTable")
-                .execute()
-                .print();
-
-        // tEnv.from("orders").insertInto("SinkTable").execute();
     }
 
     public static void main(String[] args) throws Exception {
