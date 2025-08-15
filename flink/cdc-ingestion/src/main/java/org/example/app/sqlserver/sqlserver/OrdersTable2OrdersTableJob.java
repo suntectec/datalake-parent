@@ -1,4 +1,4 @@
-package org.example.app;
+package org.example.app.sqlserver.sqlserver;
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.cdc.connectors.base.options.StartupOptions;
@@ -11,14 +11,12 @@ import org.example.utils.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-;
-
 /**
  * @author Jagger
  * @since 2025/8/6 11:40
  */
-public class CdcSqlserver2ConsoleJob {
-    private static final Logger logger = LoggerFactory.getLogger(CdcSqlserver2ConsoleJob.class);
+public class OrdersTable2OrdersTableJob {
+    private static final Logger logger = LoggerFactory.getLogger(OrdersTable2OrdersTableJob.class);
 
     public static void run(String sqlserver_host, String sqlserver_port, String sqlserver_username, String sqlserver_password,
                            String warehouse, String s3_endpoint, String s3_access_key, String s3_secret_key,
@@ -58,7 +56,7 @@ public class CdcSqlserver2ConsoleJob {
 
         String kafka_brokers = PropertiesUtil.getProperty("kafka.brokers");
 
-        CdcSqlserver2ConsoleJob.run(sqlserver_host, sqlserver_port, sqlserver_username, sqlserver_password,
+        OrdersTable2OrdersTableJob.run(sqlserver_host, sqlserver_port, sqlserver_username, sqlserver_password,
                 warehouse, s3_endpoint, s3_access_key, s3_secret_key, kafka_brokers);
     }
 }
