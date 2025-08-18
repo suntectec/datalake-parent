@@ -1,6 +1,7 @@
 package com.suntectec.realtime.common.base;
 
 import com.suntectec.realtime.common.util.FlinkSourceUtils;
+import com.suntectec.realtime.common.util.ParametersUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.java.utils.ParameterTool;
@@ -27,7 +28,7 @@ public abstract class BaseAPP {
     public abstract void handle(StreamExecutionEnvironment env,
                                 DataStreamSource<String> streamSource, ParameterTool parameter) throws Exception;
 
-    public void start(int port, String ckAndGroupId, String topic,String[] args) throws Exception {
+    public void start(int port, String ckAndGroupId, String topic,String[] args, OffsetsInitializer offsetsInitializer) throws Exception {
         // 1. 环境准备
         // 1.1 设置操作 Hadoop 的用户名为 Hadoop 超级用户 flink
         System.setProperty("HADOOP_USER_NAME", "flink");
@@ -37,9 +38,11 @@ public abstract class BaseAPP {
         conf.setInteger("rest.port", port);
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment(conf);
 
-        //1.3 将ParameterTool的参数设置成全局的参数
-        ParameterTool parameter = ParameterTool.fromArgs(args);
-        env.getConfig().setGlobalJobParameters(parameter);
+        // 1.3 将ParameterTool的参数设置成全局的参数
+        // ParameterTool parameter = ParameterTool.fromArgs(args);
+        // env.getConfig().setGlobalJobParameters(parameter);
+        // 1.3.1 升级 parameter 采用优先级：args, properties 的方式获取
+        ParameterTool parameter = ParametersUtils.setGlobalJobParameters(env, args);
         // 1.4 状态后端及检查点相关配置
         // 1.4.1 设置状态后端
         env.setStateBackend(new HashMapStateBackend());
@@ -69,8 +72,8 @@ public abstract class BaseAPP {
         env.getCheckpointConfig().setExternalizedCheckpointCleanup(RETAIN_ON_CANCELLATION);
 
         // 1.5 从 Kafka 目标主题读取数据，封装为流
-        String kafkaServer = parameter.get("kafka.broker");
-        KafkaSource<String> source = FlinkSourceUtils.getKafkaSource(kafkaServer,ckAndGroupId, topic, OffsetsInitializer.latest());
+        String kafkaServer = parameter.get("kafka.brokers");
+        KafkaSource<String> source = FlinkSourceUtils.getKafkaSource(kafkaServer, ckAndGroupId, topic, offsetsInitializer);
 
         DataStreamSource<String> stream = env.fromSource(source, WatermarkStrategy.noWatermarks(), "kafka_source");
 
