@@ -10,8 +10,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>docker</module>
-        <module>realtime-parent</module>
+        <module>flink-poc</module>
         <module>native</module>
+        <module>realtime-parent</module>
         <module>seatunnel</module>
     </modules>
 
