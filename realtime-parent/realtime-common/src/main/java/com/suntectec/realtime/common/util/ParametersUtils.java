@@ -6,7 +6,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import java.io.IOException;
 
 /**
- * Priority of set Global Job Parameters:
+ * Merge two ParameterTools, with Priority of setting Global Job Parameters:
  *  args input -> application.properties
  *
  * @author Jagger
