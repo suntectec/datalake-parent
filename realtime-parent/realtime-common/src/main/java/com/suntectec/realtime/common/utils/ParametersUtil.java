@@ -1,4 +1,4 @@
-package com.suntectec.realtime.common.util;
+package com.suntectec.realtime.common.utils;
 
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author Jagger
  * @since 2025/8/18 22:53
  */
-public abstract class ParametersUtils {
+public abstract class ParametersUtil {
 
     /**
      * Program arguments: --name zhangshan --age 20 --warehouse xxx
@@ -23,7 +23,7 @@ public abstract class ParametersUtils {
     public static ParameterTool setGlobalJobParameters(StreamExecutionEnvironment env, String[] args) throws IOException {
 
         // 1. 全局变量获取 application.properties
-        ParameterTool parameter1 = PropertiesUtils.getPropertiesParameters();
+        ParameterTool parameter1 = PropertiesUtil.getPropertiesParameters();
 
         // 2. 全局变量获取 args
         ParameterTool parameter2 = ParameterTool.fromArgs(args);
