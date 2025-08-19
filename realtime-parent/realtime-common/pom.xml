@@ -40,6 +40,16 @@
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-base</artifactId>
         </dependency>
+        <!--SqlServer CDC Connector-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-sqlserver-cdc</artifactId>
+        </dependency>
+        <!-- flink jdbc connector   -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-jdbc</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

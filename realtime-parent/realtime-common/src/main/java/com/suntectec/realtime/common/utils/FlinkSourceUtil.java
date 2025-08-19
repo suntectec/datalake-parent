@@ -1,4 +1,4 @@
-package com.suntectec.realtime.common.util;
+package com.suntectec.realtime.common.utils;
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.serialization.DeserializationSchema;
@@ -14,9 +14,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
-public class FlinkSourceUtils {
+public class FlinkSourceUtil {
 
-    public static KafkaSource<String> getKafkaSource(String kafkaServers,String groupId,String topics, OffsetsInitializer offsetsInitializer) {
+    public static KafkaSource<String> getKafkaSource(String kafkaServers, String groupId, String topics,
+                                                     OffsetsInitializer offsetsInitializer) {
 
         List<String> topicList = Arrays.asList(topics.split(","));
         // 初始化一个kafka source
@@ -61,6 +62,4 @@ public class FlinkSourceUtils {
         KafkaSource<String> kafkaSource = getKafkaSource(kafkaServers, groupId, topics, offsetsInitializer);
         return env.fromSource(kafkaSource, WatermarkStrategy.noWatermarks(), "kafka-source");
     }
-
-    // todo SqlServer Source
 }

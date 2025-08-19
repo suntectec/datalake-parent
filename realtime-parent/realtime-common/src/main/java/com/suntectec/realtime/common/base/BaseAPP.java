@@ -1,7 +1,7 @@
 package com.suntectec.realtime.common.base;
 
-import com.suntectec.realtime.common.util.FlinkSourceUtils;
-import com.suntectec.realtime.common.util.ParametersUtils;
+import com.suntectec.realtime.common.utils.FlinkSourceUtil;
+import com.suntectec.realtime.common.utils.ParametersUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.java.utils.ParameterTool;
@@ -42,7 +42,7 @@ public abstract class BaseAPP {
         // ParameterTool parameter = ParameterTool.fromArgs(args);
         // env.getConfig().setGlobalJobParameters(parameter);
         // 1.3.1 升级 parameter 采用优先级：args, properties 的方式获取
-        ParameterTool parameter = ParametersUtils.setGlobalJobParameters(env, args);
+        ParameterTool parameter = ParametersUtil.setGlobalJobParameters(env, args);
         // 1.4 状态后端及检查点相关配置
         // 1.4.1 设置状态后端
         env.setStateBackend(new HashMapStateBackend());
@@ -73,7 +73,7 @@ public abstract class BaseAPP {
 
         // 1.5 从 Kafka 目标主题读取数据，封装为流
         String kafkaServer = parameter.get("kafka.brokers");
-        KafkaSource<String> source = FlinkSourceUtils.getKafkaSource(kafkaServer, ckAndGroupId, topic, offsetsInitializer);
+        KafkaSource<String> source = FlinkSourceUtil.getKafkaSource(kafkaServer, ckAndGroupId, topic, offsetsInitializer);
 
         DataStreamSource<String> stream = env.fromSource(source, WatermarkStrategy.noWatermarks(), "kafka_source");
 

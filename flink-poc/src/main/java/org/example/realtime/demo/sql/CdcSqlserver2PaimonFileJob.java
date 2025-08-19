@@ -65,12 +65,7 @@ public class CdcSqlserver2PaimonFileJob {
         String sqlServerUsername = PropertiesUtil.getProperty("sqlserver.username");
         String sqlServerPassword = PropertiesUtil.getProperty("sqlserver.password");
 
-        String mySqlServerHost = PropertiesUtil.getProperty("my.sqlserver.host");
-        String mySqlServerPort = PropertiesUtil.getProperty("my.sqlserver.port");
-        String mySqlServerUsername = PropertiesUtil.getProperty("my.sqlserver.username");
-        String mySqlServerPassword = PropertiesUtil.getProperty("my.sqlserver.password");
-
-        CdcSqlserver2PaimonFileJob.run(mySqlServerHost, mySqlServerPort, mySqlServerUsername, mySqlServerPassword);
+        CdcSqlserver2PaimonFileJob.run(sqlServerHost, sqlServerPort, sqlServerUsername, sqlServerPassword);
 
     }
 }

@@ -1,13 +1,11 @@
-package com.suntectec.realtime.common.util;
+package com.suntectec.realtime.common.utils;
 
 import org.apache.flink.api.java.utils.ParameterTool;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 
-public class PropertiesUtils {
+public class PropertiesUtil {
     private final static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("application");
 
     private final static ResourceBundle ENV_RESOURCE_BUNDLE = ResourceBundle.getBundle("application-" + RESOURCE_BUNDLE.getString("profiles.active"));
