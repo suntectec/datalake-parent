@@ -7,7 +7,6 @@ import org.apache.flink.cdc.connectors.sqlserver.source.SqlServerSourceBuilder.S
 import org.apache.flink.cdc.debezium.JsonDebeziumDeserializationSchema;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.example.realtime.demo.sql.CdcSqlserver2SqlserverJob;
 import org.example.utils.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @since 2025/8/15 16:13
  */
 public class CdcSqlserver2ConsoleJob {
-    private final static Logger logger = LoggerFactory.getLogger(CdcSqlserver2SqlserverJob.class);
+    private final static Logger logger = LoggerFactory.getLogger(CdcSqlserver2ConsoleJob.class);
 
     public static void run(String sqlserver_host, String sqlserver_port, String sqlserver_username, String sqlserver_password) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
