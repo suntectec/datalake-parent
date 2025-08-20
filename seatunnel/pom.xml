@@ -7,7 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>seatunnel</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>pom</packaging> <!-- 定义聚合项目/父模块(不参与产生 JAR 包) -->
     <modules>
         <module>udf</module>
     </modules>

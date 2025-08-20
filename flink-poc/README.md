@@ -1,11 +1,10 @@
 # Initialization Dependencies
 
 ```
-wget -P plugin https://repo1.maven.org/maven2/org/apache/flink/flink-core/1.20.1/flink-core-1.20.1.jar; \
-wget -P plugin https://repo1.maven.org/maven2/org/apache/flink/flink-clients/1.20.1/flink-clients-1.20.1.jar; \
-wget -P plugin https://repo1.maven.org/maven2/org/apache/flink/flink-streaming-java/1.20.1/flink-streaming-java-1.20.1.jar; \
-wget -P plugin https://repo1.maven.org/maven2/org/apache/flink/flink-java/1.20.1/flink-java-1.20.1.jar
-
+wget -P lib/plugin https://repo1.maven.org/maven2/org/apache/flink/flink-core/1.20.1/flink-core-1.20.1.jar; \
+wget -P lib/plugin https://repo1.maven.org/maven2/org/apache/flink/flink-clients/1.20.1/flink-clients-1.20.1.jar; \
+wget -P lib/plugin https://repo1.maven.org/maven2/org/apache/flink/flink-streaming-java/1.20.1/flink-streaming-java-1.20.1.jar; \
+wget -P lib/plugin https://repo1.maven.org/maven2/org/apache/flink/flink-java/1.20.1/flink-java-1.20.1.jar
 ```
 
 # Maven Ops
