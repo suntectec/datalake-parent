@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @since 2025/8/15 16:13
  */
 public class CdcSqlserver2ConsoleJob {
-    private final static Logger logger = LoggerFactory.getLogger(CdcSqlserver2SqlserverJob.class);
+    private final static Logger logger = LoggerFactory.getLogger(CdcSqlserver2ConsoleJob.class);
 
     public static void run(String sqlserver_host, String sqlserver_port, String sqlserver_username, String sqlserver_password) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
