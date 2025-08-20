@@ -12,7 +12,6 @@
         <module>docker</module>
         <module>flink-poc</module>
         <module>native</module>
-        <module>realtime-parent</module>
         <module>seatunnel</module>
     </modules>
 
