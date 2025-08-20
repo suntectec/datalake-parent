@@ -30,10 +30,10 @@ import org.slf4j.LoggerFactory;
  * @author Jagger
  * @since 2025/8/1 11:30
  */
-public class CdcSqlserver2PaimonJob {
+public class CdcSqlserver2PaimonS3Job {
 
     // Define Logger at the class level
-    private static final Logger logger = LoggerFactory.getLogger(CdcSqlserver2PaimonJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(CdcSqlserver2PaimonS3Job.class);
 
     public static void run(String sqlserver_host, String sqlserver_port, String sqlserver_username, String sqlserver_password,
                            String s3_endpoint, String s3_access_key, String s3_secret_key) throws Exception {
@@ -124,7 +124,7 @@ public class CdcSqlserver2PaimonJob {
         String s3_access_key = PropertiesUtil.getProperty("s3.access-key");
         String s3_secret_key = PropertiesUtil.getProperty("s3.secret-key");
 
-        CdcSqlserver2PaimonJob.run(sqlserver_host, sqlserver_port, sqlserver_username, sqlserver_password,
+        CdcSqlserver2PaimonS3Job.run(sqlserver_host, sqlserver_port, sqlserver_username, sqlserver_password,
                 s3_endpoint, s3_access_key, s3_secret_key);
     }
 }
