@@ -10,7 +10,7 @@
     <packaging>pom</packaging> <!-- 定义聚合项目/父模块(不参与产生 JAR 包) -->
     <modules>
         <module>docker</module>
-        <module>flink-poc</module>
+        <module>flink</module>
         <module>native</module>
         <module>seatunnel</module>
     </modules>
