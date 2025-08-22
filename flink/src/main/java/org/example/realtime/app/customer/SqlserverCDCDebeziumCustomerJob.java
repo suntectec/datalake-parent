@@ -14,7 +14,7 @@ import java.util.Properties;
  * @author Jagger
  * @since 2025/8/19 13:41
  */
-public class SqlServerCDCDebeziumCustomerJob {
+public class SqlserverCDCDebeziumCustomerJob {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -45,7 +45,7 @@ public class SqlServerCDCDebeziumCustomerJob {
                 // .deserializer(new JsonDebeziumDeserializationSchema())
                 // {"op":"READ","after":{"id":2,"order_id":"6eaa804c-5d1d-4b2f-ac92-021783a10d87","supplier_id":3016,"item_id":47,"status":"shipped","qty":600,"net_price":1310,"issued_at":"2025-07-23 04:02:21","completed_at":"2025-07-23 04:02:21","created_at":"2025-07-23 04:02:21","updated_at":"2025-07-23 11:53:26"},"db":"INV","tableName":"orders"}
                 .debeziumProperties(getDebeziumProperties())
-                .deserializer(new CustomerDeserializationSchemaSqlserver())
+                .deserializer(new SqlserverDeserializationSchema())
                 .build();
 
         DataStreamSource<String> dataStreamSource = env.addSource(sqlServerSource, "_transaction_log_source");
@@ -58,7 +58,7 @@ public class SqlServerCDCDebeziumCustomerJob {
     public static Properties getDebeziumProperties() {
         Properties properties = new Properties();
         properties.put("converters", "sqlserverDebeziumConverter");
-        properties.put("sqlserverDebeziumConverter.type", "org.example.realtime.customer.SqlserverDebeziumConverter");
+        properties.put("sqlserverDebeziumConverter.type", "org.example.realtime.app.customer.SqlserverDebeziumConverter");
         properties.put("sqlserverDebeziumConverter.database.type", "sqlserver");
         // 自定义格式，可选
         properties.put("sqlserverDebeziumConverter.format.datetime", "yyyy-MM-dd HH:mm:ss");

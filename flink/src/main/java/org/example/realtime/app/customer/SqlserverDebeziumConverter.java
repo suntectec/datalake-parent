@@ -10,6 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 /**
+ * 自定义日期格式转换器：
+ *  debezium会将日期转为5位数字，日期时间位13位的数字，因此我们需要根据Sqlserver的日期类型转换成标准的时期或者时间格式
+ *
  * @author Jagger
  * @since 2025/8/19 14:05
  */
