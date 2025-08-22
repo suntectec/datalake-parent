@@ -17,10 +17,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 自定义反序列化格式，将数据按照标准统一数据输出
+ *
  * @author Jagger
  * @since 2025/8/19 14:04
  */
-public class CustomerDeserializationSchemaSqlserver implements DebeziumDeserializationSchema<String> {
+public class SqlserverDeserializationSchema implements DebeziumDeserializationSchema<String> {
 
     private static final long serialVersionUID = -1L;
 

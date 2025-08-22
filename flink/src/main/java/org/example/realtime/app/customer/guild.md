@@ -1,6 +1,6 @@
 sqlserver-transaction-log-source
 
-SqlServer CDC Debezium:
+Flink-CDC底层技术为debezium，它捕获到SqlServer数据变更(CRUD)的数据格式如下：
 
 ```shell
 #初始化
