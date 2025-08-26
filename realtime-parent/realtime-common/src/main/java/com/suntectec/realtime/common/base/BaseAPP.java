@@ -72,7 +72,7 @@ public abstract class BaseAPP {
         env.getCheckpointConfig().setExternalizedCheckpointCleanup(RETAIN_ON_CANCELLATION);
 
         // 1.5 从 Kafka 目标主题读取数据，封装为流
-        String kafkaServer = parameter.get("kafka.brokers");
+        String kafkaServer = parameter.get("kafka.broker");
         KafkaSource<String> source = FlinkSourceUtil.getKafkaSource(kafkaServer, ckAndGroupId, topic, offsetsInitializer);
 
         DataStreamSource<String> stream = env.fromSource(source, WatermarkStrategy.noWatermarks(), "kafka_source");
