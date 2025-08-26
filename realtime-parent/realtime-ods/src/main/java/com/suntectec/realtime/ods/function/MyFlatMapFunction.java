@@ -9,6 +9,8 @@ import org.apache.flink.util.Collector;
 import java.util.Map;
 
 /**
+ * 入参展平
+ *
  * @author Jagger
  * @since 2025/8/18 22:36
  */

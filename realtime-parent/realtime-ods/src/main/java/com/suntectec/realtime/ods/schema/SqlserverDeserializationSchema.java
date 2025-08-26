@@ -13,6 +13,9 @@ import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.jose4j.json.internal.json_simple.JSONObject;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,28 +32,36 @@ public class SqlserverDeserializationSchema implements DebeziumDeserializationSc
     @Override
     public void deserialize(SourceRecord sourceRecord, Collector<String> collector) throws Exception {
         Map<String, Object> resultMap = new HashMap<>();
-        /** String topic = sourceRecord.topic();
+        /* String topic = sourceRecord.topic();
         String[] split = topic.split("[.]");
         String database = split[1];
         String table = split[2];
         resultMap.put("db", database);
         resultMap.put("tableName", table); */
-        //获取操作类型
+        // 获取操作类型
         Envelope.Operation operation = Envelope.operationFor(sourceRecord);
-        //获取数据本身
+        // 获取数据本身
         Struct struct = (Struct) sourceRecord.value();
         Struct after = struct.getStruct("after");
         Struct before = struct.getStruct("before");
         String op = operation.name();
         resultMap.put("op", op);
-        // 修复 db name
+        // 获取 db、table、ts_ms
         Struct source = struct.getStruct("source");
-        String db = source.getString("db");
-        String db_schema = source.getString("schema");
-        String table = source.getString("table");
-        resultMap.put("dbName", db);
-        resultMap.put("schemaName", db_schema);
-        resultMap.put("tableName", table);
+        String tableCatalog = source.getString("db");
+        String tableSchema = source.getString("schema");
+        String tableName = source.getString("table");
+        Long sourceTsMs = source.getInt64("ts_ms"); // 获取source.ts_ms: 源系统创建事件的时间戳。对应于Debezium记录中的source.ts_ts字段。在数据库中进行更改的时间戳
+        Long tsMs = struct.getInt64("ts_ms"); // 获取ts_ms: 连接器处理事件时的时间戳。对应于Debezium记录中的ts_ms字段。连接器处理事件的JVM系统时钟时间戳
+        resultMap.put("tableCatalog", tableCatalog);
+        resultMap.put("tableSchema", tableSchema);
+        resultMap.put("tableName", tableName);
+        // sourceTimestamp source.ts_ms, ingestionTimestamp ts_ms: Long -> DateTime
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String sourceDateTime = dateTimeFormatter.format(Instant.ofEpochMilli(sourceTsMs).atZone(ZoneId.systemDefault()));
+        String ingestionDateTime = dateTimeFormatter.format(Instant.ofEpochMilli(tsMs).atZone(ZoneId.systemDefault()));
+        resultMap.put("sourceDateTime", sourceDateTime);
+        resultMap.put("ingestionDateTime", ingestionDateTime);
 
         // 新增,更新或者初始化
         if (op.equals(Envelope.Operation.CREATE.name()) || op.equals(Envelope.Operation.READ.name()) || op.equals(Envelope.Operation.UPDATE.name())) {
