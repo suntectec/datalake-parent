@@ -13,7 +13,6 @@
         <module>flink</module>
         <module>native</module>
         <module>seatunnel</module>
-        <module>realtime-parent</module>
     </modules>
 
 </project>
