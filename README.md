@@ -16,11 +16,11 @@
       * SeaTunnel Config Jobs Compute System
    * **_data_**
       * Database Storage System
-2. [x] **_flink_**
+1. [x] **_flink_**
    Flink Coding Program with DataStream API & Table API & SQL Example Jobs
-3. [x] **_native_**
+1. [x] **_native_**
    Local Download Flink and SeaTunnel for AB Control Groups Experiments
-4. [x] **_seatunnel_**
+1. [x] **_seatunnel_**
    SeaTunnel Coding Program UDF Examples
 
 ### For entering workdir-path faster, using setting alias in bashrc:
