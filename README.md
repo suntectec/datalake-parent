@@ -17,11 +17,11 @@
    * **_data_**
    Database Storage System
 1. [x] **_flink_**
-Flink Java Coding Program with DataStream API & Table API & SQL Example Jobs
+Flink Coding Program with DataStream API & Table API & SQL Example Jobs
 1. [x] **_native_**
 Local Download Flink and SeaTunnel for AB Control Groups Experiments
 1. [x] **_seatunnel_**
-SeaTunnel UDF Examples
+SeaTunnel Coding Program UDF Examples
 
 ### For entering workdir-path faster, using setting alias in bashrc:
 
