@@ -181,7 +181,10 @@ rest:
   # # Port range for the REST and web server to bind to.
   # bind-port: 8080-8090
 
-# web:
+web:
+  tmpdir: /opt/poc-allin1/native/flink/flink-1.20.1/web/tmp/
+  upload:
+    dir: /opt/poc-allin1/native/flink/flink-1.20.1/web/upload/
 #   submit:
 #     # Flag to specify whether job submission is enabled from the web-based
 #     # runtime monitor. Uncomment to disable.
