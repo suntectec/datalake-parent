@@ -61,8 +61,6 @@ CREATE TABLE IF NOT EXISTS orders_from_kafka (
     PRIMARY KEY (id) NOT ENFORCED
     );
 
--- required set before submit insert job, otherwise data not observe
--- execution.checkpointing.interval: default - none, The base interval setting. To enable checkpointing, you need to set this value larger than 0.
--- SET 'execution.checkpointing.interval' = '10 s';
+SET 'execution.checkpointing.interval' = '10 s';
 
 INSERT INTO orders_from_kafka SELECT * FROM orders_kafka_source;
