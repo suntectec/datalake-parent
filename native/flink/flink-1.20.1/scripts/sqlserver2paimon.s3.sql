@@ -13,7 +13,7 @@ CREATE DATABASE IF NOT EXISTS inventory;
 
 USE inventory;
 
-CREATE TEMPORARY TABLE sqlserver_source (
+CREATE TEMPORARY TABLE orders_sqlserver_source (
     id BIGINT,
     order_id VARCHAR(36),
     supplier_id INT,
@@ -37,7 +37,7 @@ CREATE TEMPORARY TABLE sqlserver_source (
     'table-name' = 'INV.orders'
 );
 
-CREATE TABLE IF NOT EXISTS orders (
+CREATE TABLE IF NOT EXISTS orders_from_sqlserver (
     id BIGINT,
     order_id VARCHAR(36),
     supplier_id INT,
@@ -55,4 +55,4 @@ CREATE TABLE IF NOT EXISTS orders (
 
 SET 'execution.checkpointing.interval' = '10 s';
 
-INSERT INTO orders SELECT * FROM sqlserver_source;
+INSERT INTO orders_from_sqlserver SELECT * FROM orders_sqlserver_source;
