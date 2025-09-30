@@ -13,8 +13,7 @@ CREATE DATABASE IF NOT EXISTS inventory;
 
 USE inventory;
 
-CREATE TEMPORARY TABLE orders_kafka_source
-(
+CREATE TEMPORARY TABLE orders_kafka_source (
     id              BIGINT,
     order_id        STRING,
     supplier_id     INT,
