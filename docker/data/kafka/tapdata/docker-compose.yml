@@ -1,0 +1,73 @@
+services:
+  tapdata-zookeeper:
+    image: confluentinc/cp-zookeeper:7.7.3
+    hostname: zookeeper
+    container_name: tapdata-zookeeper
+    ports:
+      - "12181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - kafka-net
+
+  tapdata-kafka:
+    image: confluentinc/cp-server:7.7.3
+    hostname: kafka
+    container_name: tapdata-kafka
+    depends_on:
+      - tapdata-zookeeper
+    ports:
+      - "19092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - kafka-net
+
+  tapdata-kafka-init-topics:
+    image: confluentinc/cp-kafka:7.7.3
+    container_name: tapdata-kafka-init-topics
+    volumes:
+      - ./data/:/data/
+    depends_on:
+      - tapdata-kafka
+    command: >
+      bash -c '
+      echo "Waiting for Kafka to be ready..." &&
+      cub kafka-ready -b kafka:9092 1 30 &&
+      kafka-topics --create --topic users --partitions 3 --replication-factor 1 --if-not-exists --bootstrap-server kafka:9092 &&
+      kafka-topics --create --topic messages --partitions 2 --replication-factor 1 --if-not-exists --bootstrap-server kafka:9092 &&
+      kafka-console-producer --bootstrap-server kafka:9092 --topic users < /data/users.text &&
+      kafka-console-producer --bootstrap-server kafka:9092 --topic messages < /data/messages.text
+      '
+    networks:
+      - kafka-net
+    restart: "no"
+
+  tapdata-kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: tapdata-kafka-ui
+    ports:
+      - 9020:8080
+    environment:
+      AUTH_TYPE: DISABLED
+      KAFKA_CLUSTERS_0_NAME: kafka-cluster01
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    depends_on:
+      - tapdata-kafka
+    networks:
+      - kafka-net
+
+networks:
+  kafka-net:
+    driver: bridge
